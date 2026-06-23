@@ -33,9 +33,11 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
+  const ADMIN_EMAIL = "tbsolutions.official@gmail.com";
+
   useEffect(() => {
     return onAuthStateChanged(auth, (u) => {
-      if (u) router.replace("/admin/dashboard");
+      if (u && u.email === ADMIN_EMAIL) router.replace("/admin/dashboard");
     });
   }, [router]);
 
@@ -44,6 +46,10 @@ export default function AdminLoginPage() {
   });
 
   async function onSubmit(data: LoginForm) {
+    if (data.email !== ADMIN_EMAIL) {
+      toast.error("Access denied. Unauthorized email.");
+      return;
+    }
     try {
       await signIn(data.email, data.password);
       router.push("/admin/dashboard");

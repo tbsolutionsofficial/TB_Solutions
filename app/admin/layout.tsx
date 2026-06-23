@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import AdminSidebar from "@/components/admin/AdminSidebar";
+import { signOut } from "@/lib/auth";
 import {
   LayoutDashboard, FolderOpen, Star, FileText, Settings
 } from "lucide-react";
@@ -17,17 +18,28 @@ const BOTTOM_NAV = [
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
+// Only this email is allowed to access the admin panel
+const ADMIN_EMAIL = "tbsolutions.official@gmail.com";
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const isLoginPage = pathname === "/admin";
 
+  const isAuthorized = user?.email === ADMIN_EMAIL;
+
   useEffect(() => {
-    if (!loading && !user && !isLoginPage) {
+    if (loading) return;
+    if (!user && !isLoginPage) {
       router.replace("/admin");
+      return;
     }
-  }, [user, loading, isLoginPage, router]);
+    // Signed in but wrong account — sign them out immediately
+    if (user && !isAuthorized) {
+      signOut().then(() => router.replace("/admin"));
+    }
+  }, [user, loading, isLoginPage, isAuthorized, router]);
 
   if (isLoginPage) return <>{children}</>;
 
@@ -41,13 +53,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  if (!user) return null;
+  if (!user || !isAuthorized) return null;
 
   return (
     <div className="min-h-screen mesh-bg-dark">
       <AdminSidebar />
 
-      {/* Main content */}
       <div className="md:pl-60 min-h-screen flex flex-col">
         {children}
       </div>
