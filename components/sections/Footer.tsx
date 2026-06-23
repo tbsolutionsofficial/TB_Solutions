@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, Globe } from "lucide-react";
 
 function InstagramIcon({ size = 13 }: { size?: number }) {
@@ -21,16 +22,6 @@ function LinkedinIcon({ size = 13 }: { size?: number }) {
   );
 }
 
-function TorchIcon({ size = 24 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L10 8H14L12 2Z" fill="#cc785c" />
-      <rect x="10" y="8" width="4" height="10" rx="2" fill="#cc785c" />
-      <ellipse cx="12" cy="18" rx="3" ry="1.5" fill="#a9583e" />
-      <path d="M12 4C12 4 14 6 14 7.5C14 9 13 9.5 12 9.5C11 9.5 10 9 10 7.5C10 6 12 4 12 4Z" fill="#e8a55a" opacity="0.8" />
-    </svg>
-  );
-}
 
 const FOOTER_LINKS = {
   Services: [
@@ -50,7 +41,7 @@ const FOOTER_LINKS = {
   Contact: [
     { icon: Phone, label: "+91 6303987443", href: "tel:+916303987443" },
     { icon: Mail, label: "hello@torchbearersolutions.in", href: "mailto:hello@torchbearersolutions.in" },
-    { icon: Globe, label: "tbsolutions.web.app", href: "https://tbsolutions.web.app" },
+    { icon: Globe, label: "tbsolutions.online", href: "https://tbsolutions.online" },
   ],
   "Follow Us": [
     { icon: InstagramIcon, label: "Instagram", href: "#" },
@@ -66,11 +57,14 @@ export default function Footer() {
       <div className="relative max-w-7xl mx-auto">
         {/* Brand */}
         <div className="flex flex-col items-center mb-12">
-          <div className="flex items-center gap-3 mb-2">
-            <TorchIcon size={36} />
-            <span className="font-cormorant text-2xl text-white">TorchBearer Solutions</span>
-          </div>
-          <em className="font-cormorant text-coral text-lg not-italic">We Light the Way</em>
+          <Image
+            src="/logo.png"
+            alt="TB Solutions"
+            width={280}
+            height={78}
+            className="h-20 w-auto object-contain mb-3"
+          />
+          <em className="font-cormorant text-coral text-lg not-italic">Guiding Ideas. Empowering Impact.</em>
         </div>
 
         {/* Links Grid */}

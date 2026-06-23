@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 import { signIn } from "@/lib/auth";
 import { auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -17,17 +18,6 @@ const loginSchema = z.object({
   password: z.string().min(1, "Password required"),
 });
 type LoginForm = z.infer<typeof loginSchema>;
-
-function TorchIcon() {
-  return (
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L10 8H14L12 2Z" fill="#cc785c" />
-      <rect x="10" y="8" width="4" height="10" rx="2" fill="#cc785c" />
-      <ellipse cx="12" cy="18" rx="3" ry="1.5" fill="#a9583e" />
-      <path d="M12 4C12 4 14 6 14 7.5C14 9 13 9.5 12 9.5C11 9.5 10 9 10 7.5C10 6 12 4 12 4Z" fill="#e8a55a" opacity="0.8" />
-    </svg>
-  );
-}
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -65,9 +55,15 @@ export default function AdminLoginPage() {
       <div className="relative w-full max-w-md">
         <div className="glass-dark glass-shimmer relative rounded-3xl p-10">
           <div className="flex flex-col items-center mb-8">
-            <TorchIcon />
-            <h1 className="font-cormorant text-4xl text-white mt-3 tracking-[-0.5px]">Admin Login</h1>
-            <p className="font-inter text-sm text-white/40 mt-1">TorchBearer Solutions</p>
+            <Image
+              src="/logo.png"
+              alt="TB Solutions"
+              width={220}
+              height={60}
+              className="h-16 w-auto object-contain mb-2"
+              priority
+            />
+            <h1 className="font-cormorant text-3xl text-white tracking-[-0.5px]">Admin Login</h1>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

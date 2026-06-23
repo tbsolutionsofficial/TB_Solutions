@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -10,17 +11,6 @@ const NAV_LINKS = [
   { label: "Reviews", href: "#reviews" },
   { label: "Contact", href: "#contact" },
 ];
-
-function TorchIcon({ size = 24 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2L10 8H14L12 2Z" fill="#cc785c" />
-      <rect x="10" y="8" width="4" height="10" rx="2" fill="#cc785c" />
-      <ellipse cx="12" cy="18" rx="3" ry="1.5" fill="#a9583e" />
-      <path d="M12 4C12 4 14 6 14 7.5C14 9 13 9.5 12 9.5C11 9.5 10 9 10 7.5C10 6 12 4 12 4Z" fill="#e8a55a" opacity="0.8" />
-    </svg>
-  );
-}
 
 export default function GlassNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -59,13 +49,17 @@ export default function GlassNav() {
       <nav
         className={`fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-48px)] max-w-[1160px] rounded-full glass-nav transition-all duration-300 ${scrolled ? "shadow-2xl" : ""}`}
       >
-        <div className="flex items-center justify-between px-6 py-3">
+        <div className="flex items-center justify-between px-4 py-2">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <TorchIcon size={28} />
-            <span className="font-cormorant text-lg font-normal text-ink tracking-tight hidden sm:block">
-              TB Solutions
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="TB Solutions"
+              width={160}
+              height={44}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -132,9 +126,14 @@ export default function GlassNav() {
             >
               <X size={24} />
             </button>
-            <Link href="/" className="flex items-center gap-3 mb-4" onClick={() => setMobileOpen(false)}>
-              <TorchIcon size={40} />
-              <span className="font-cormorant text-3xl text-ink">TorchBearer Solutions</span>
+            <Link href="/" className="mb-4" onClick={() => setMobileOpen(false)}>
+              <Image
+                src="/logo.png"
+                alt="TB Solutions"
+                width={240}
+                height={66}
+                className="h-16 w-auto object-contain"
+              />
             </Link>
             {NAV_LINKS.map((link) => (
               <button
