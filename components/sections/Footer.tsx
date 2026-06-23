@@ -40,7 +40,7 @@ const FOOTER_LINKS = {
   ],
   Contact: [
     { icon: Phone, label: "+91 6303987443", href: "tel:+916303987443" },
-    { icon: Mail, label: "hello@torchbearersolutions.in", href: "mailto:hello@torchbearersolutions.in" },
+    { icon: Mail, label: "tbsolutions.official@gmail.com", href: "mailto:tbsolutions.official@gmail.com" },
     { icon: Globe, label: "tbsolutions.online", href: "https://tbsolutions.online" },
   ],
   "Follow Us": [
@@ -63,7 +63,7 @@ export default function Footer() {
               alt="TB Solutions"
               width={280}
               height={78}
-              className="h-16 w-auto object-contain"
+              className="h-24 w-auto object-contain"
             />
           </div>
           <em className="font-cormorant text-coral text-lg not-italic">Guiding Ideas. Empowering Impact.</em>

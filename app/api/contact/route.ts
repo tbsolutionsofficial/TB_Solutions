@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
 
     // CONTACT_EMAIL_USER = Gmail address used to SEND (e.g. yourgmail@gmail.com)
     // CONTACT_EMAIL_PASSWORD = Gmail App Password (16-char, from Google Account → Security → App Passwords)
-    const senderEmail = process.env.CONTACT_EMAIL_USER || "hello@torchbearersolutions.in";
-    const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || "hello@torchbearersolutions.in";
+    const senderEmail = process.env.CONTACT_EMAIL_USER || "tbsolutions.official@gmail.com";
+    const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || "tbsolutions.official@gmail.com";
 
     const transporter = nodemailer.createTransport({
       service: "gmail",

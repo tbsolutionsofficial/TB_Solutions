@@ -42,7 +42,7 @@ export default function AdminSidebar() {
             alt="TB Solutions"
             width={160}
             height={44}
-            className="h-9 w-auto object-contain"
+            className="h-12 w-auto object-contain"
             priority
           />
         </div>

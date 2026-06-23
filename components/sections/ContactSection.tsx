@@ -22,9 +22,9 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 const CONTACT_LINKS = [
   { icon: Phone, label: "+91 6303987443", href: "tel:+916303987443" },
-  { icon: Mail, label: "hello@torchbearersolutions.in", href: "mailto:hello@torchbearersolutions.in" },
+  { icon: Mail, label: "tbsolutions.official@gmail.com", href: "mailto:tbsolutions.official@gmail.com" },
   { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/916303987443" },
-  { icon: Globe, label: "tbsolutions.web.app", href: "https://tbsolutions.web.app" },
+  { icon: Globe, label: "tbsolutions.online", href: "https://tbsolutions.online" },
 ];
 
 export default function ContactSection() {

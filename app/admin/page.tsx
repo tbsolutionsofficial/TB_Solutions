@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
                 alt="TB Solutions"
                 width={220}
                 height={60}
-                className="h-14 w-auto object-contain"
+                className="h-20 w-auto object-contain"
                 priority
               />
             </div>

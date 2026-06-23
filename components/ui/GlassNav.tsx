@@ -57,7 +57,7 @@ export default function GlassNav() {
               alt="TB Solutions"
               width={160}
               height={44}
-              className="h-10 w-auto object-contain"
+              className="h-14 w-auto object-contain"
               priority
             />
           </Link>
@@ -132,7 +132,7 @@ export default function GlassNav() {
                 alt="TB Solutions"
                 width={240}
                 height={66}
-                className="h-16 w-auto object-contain"
+                className="h-20 w-auto object-contain"
               />
             </Link>
             {NAV_LINKS.map((link) => (
