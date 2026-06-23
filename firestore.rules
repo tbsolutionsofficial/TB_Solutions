@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Projects — public read, auth-only write
+    match /projects/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Reviews — public read of approved only, public submit (approved:false forced), auth manage
+    match /reviews/{docId} {
+      allow read: if resource.data.approved == true;
+      allow create: if request.resource.data.approved == false;
+      allow update, delete: if request.auth != null;
+    }
+
+    // Site content — public read, auth-only write
+    match /siteContent/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Admin settings — auth only
+    match /adminSettings/{docId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
