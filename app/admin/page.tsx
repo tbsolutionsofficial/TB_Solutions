@@ -55,14 +55,16 @@ export default function AdminLoginPage() {
       <div className="relative w-full max-w-md">
         <div className="glass-dark glass-shimmer relative rounded-3xl p-10">
           <div className="flex flex-col items-center mb-8">
-            <Image
-              src="/logo.png"
-              alt="TB Solutions"
-              width={220}
-              height={60}
-              className="h-16 w-auto object-contain mb-2"
-              priority
-            />
+            <div className="bg-white/95 rounded-2xl px-5 py-3 mb-2">
+              <Image
+                src="/logo.png"
+                alt="TB Solutions"
+                width={220}
+                height={60}
+                className="h-14 w-auto object-contain"
+                priority
+              />
+            </div>
             <h1 className="font-cormorant text-3xl text-white tracking-[-0.5px]">Admin Login</h1>
           </div>
 

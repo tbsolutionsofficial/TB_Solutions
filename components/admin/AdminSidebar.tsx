@@ -36,14 +36,16 @@ export default function AdminSidebar() {
     <aside className="hidden md:flex flex-col w-60 min-h-screen glass-dark border-r border-white/10 fixed left-0 top-0 z-30">
       {/* Brand */}
       <div className="flex items-center justify-center px-4 py-4 border-b border-white/10">
-        <Image
-          src="/logo.png"
-          alt="TB Solutions"
-          width={160}
-          height={44}
-          className="h-10 w-auto object-contain"
-          priority
-        />
+        <div className="bg-white/95 rounded-xl px-3 py-1.5">
+          <Image
+            src="/logo.png"
+            alt="TB Solutions"
+            width={160}
+            height={44}
+            className="h-9 w-auto object-contain"
+            priority
+          />
+        </div>
       </div>
 
       {/* Nav */}

@@ -57,13 +57,15 @@ export default function Footer() {
       <div className="relative max-w-7xl mx-auto">
         {/* Brand */}
         <div className="flex flex-col items-center mb-12">
-          <Image
-            src="/logo.png"
-            alt="TB Solutions"
-            width={280}
-            height={78}
-            className="h-20 w-auto object-contain mb-3"
-          />
+          <div className="bg-white/95 rounded-2xl px-6 py-3 mb-3">
+            <Image
+              src="/logo.png"
+              alt="TB Solutions"
+              width={280}
+              height={78}
+              className="h-16 w-auto object-contain"
+            />
+          </div>
           <em className="font-cormorant text-coral text-lg not-italic">Guiding Ideas. Empowering Impact.</em>
         </div>
 
