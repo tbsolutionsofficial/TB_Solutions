@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 export const dynamic = "force-dynamic";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,11 +24,8 @@ export default function AdminContentPage() {
   async function onSubmit(data: SiteContent) {
     try {
       const existing = await getSiteContent();
-      if (existing) {
-        await updateSiteContent(data);
-      } else {
-        await initSiteContent(data);
-      }
+      if (existing) { await updateSiteContent(data); }
+      else { await initSiteContent(data); }
       toast.success("Site content updated!");
     } catch {
       toast.error("Failed to save. Try again.");
@@ -68,6 +65,7 @@ export default function AdminContentPage() {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            {/* Hero */}
             <div className="glass-dark rounded-2xl p-6 space-y-5">
               <h3 className="font-cormorant text-lg text-coral">Hero Section</h3>
               <GlassInput label="Hero Headline" {...register("heroHeadline")} />
@@ -78,6 +76,7 @@ export default function AdminContentPage() {
               </div>
             </div>
 
+            {/* Contact */}
             <div className="glass-dark rounded-2xl p-6 space-y-5">
               <h3 className="font-cormorant text-lg text-coral">Contact Info</h3>
               <GlassInput label="Phone Number" {...register("phone")} />
@@ -86,15 +85,35 @@ export default function AdminContentPage() {
               <GlassInput label="WhatsApp Number (digits only)" {...register("whatsapp")} />
             </div>
 
+            {/* Social */}
             <div className="glass-dark rounded-2xl p-6 space-y-5">
               <h3 className="font-cormorant text-lg text-coral">Social Media</h3>
               <GlassInput label="Instagram Handle" placeholder="@youraccount" {...register("instagram")} />
               <GlassInput label="LinkedIn URL" {...register("linkedin")} />
             </div>
 
+            {/* About */}
             <div className="glass-dark rounded-2xl p-6 space-y-5">
-              <h3 className="font-cormorant text-lg text-coral">About</h3>
-              <GlassTextarea label="About Text" rows={4} {...register("aboutText")} />
+              <h3 className="font-cormorant text-lg text-coral">About Section</h3>
+              <GlassInput label="About Title" placeholder="About TorchBearer Solutions" {...register("aboutTitle")} />
+              <GlassTextarea label="About Text (main paragraph)" rows={5} {...register("aboutText")} />
+              <GlassTextarea label="Our Mission" rows={3} {...register("aboutMission")} />
+              <GlassTextarea label="Our Vision" rows={3} {...register("aboutVision")} />
+            </div>
+
+            {/* Offers Headline */}
+            <div className="glass-dark rounded-2xl p-6 space-y-5">
+              <h3 className="font-cormorant text-lg text-coral">Offers Section</h3>
+              <GlassInput label="Section Headline" placeholder="Exclusive Deals for You" {...register("offersHeadline")} />
+              <GlassInput label="Section Subtitle" placeholder="Limited time offers for students and professionals" {...register("offersSubtitle")} />
+            </div>
+
+            {/* Terms */}
+            <div className="glass-dark rounded-2xl p-6 space-y-5">
+              <h3 className="font-cormorant text-lg text-coral">Terms & Conditions</h3>
+              <p className="font-inter text-xs text-white/40">Write in plain text. Use blank lines between paragraphs.</p>
+              <GlassInput label="Last Updated Date" placeholder="e.g. June 2026" {...register("termsLastUpdated")} />
+              <GlassTextarea label="Terms & Conditions Content" rows={12} {...register("termsContent")} />
             </div>
 
             <GlassButton type="submit" variant="coral" fullWidth size="lg" loading={isSubmitting}>
@@ -106,4 +125,3 @@ export default function AdminContentPage() {
     </>
   );
 }
-

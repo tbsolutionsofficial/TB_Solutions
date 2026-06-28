@@ -7,6 +7,7 @@ import { motion, useInView } from "framer-motion";
 import { toast } from "sonner";
 import { Phone, Mail, MessageCircle, Globe } from "lucide-react";
 import { DOMAINS } from "@/lib/types";
+import { saveContactSubmission } from "@/lib/firestore";
 import { GlassInput, GlassTextarea, GlassSelect } from "@/components/ui/GlassInput";
 import GlassButton from "@/components/ui/GlassButton";
 
@@ -37,12 +38,14 @@ export default function ContactSection() {
 
   async function onSubmit(data: ContactFormData) {
     try {
-      const res = await fetch("/api/contact", {
+      // Save to Firestore (primary — always works)
+      await saveContactSubmission(data);
+      // Fire-and-forget email notification
+      fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Failed");
+      }).catch(() => {});
       toast.success("Message sent! We'll get back to you soon.");
       reset();
     } catch {

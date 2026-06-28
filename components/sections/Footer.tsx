@@ -151,9 +151,14 @@ export default function Footer() {
           <p className="font-inter text-xs text-white/40">
             © 2026 TorchBearer Solutions. All rights reserved.
           </p>
-          <Link href="/admin" className="font-inter text-xs text-white/30 hover:text-white/60 transition-colors">
-            Admin
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/terms" className="font-inter text-xs text-white/30 hover:text-white/60 transition-colors">
+              Terms & Conditions
+            </Link>
+            <Link href="/admin" className="font-inter text-xs text-white/30 hover:text-white/60 transition-colors">
+              Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

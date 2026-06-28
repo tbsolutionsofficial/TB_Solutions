@@ -4,7 +4,9 @@ import { useState } from "react";
 import GlassNav from "@/components/ui/GlassNav";
 import Hero from "@/components/sections/Hero";
 import DomainsStrip from "@/components/sections/DomainsStrip";
+import BannersSection from "@/components/sections/BannersSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
+import OffersSection from "@/components/sections/OffersSection";
 import HowWeWork from "@/components/sections/HowWeWork";
 import WhoWeServe from "@/components/sections/WhoWeServe";
 import ReviewsSection from "@/components/sections/ReviewsSection";
@@ -22,8 +24,10 @@ export default function HomePage() {
       <GlassNav />
       <main>
         <Hero content={content} />
+        <BannersSection onDomainClick={(d) => { setDomainFilter(d); }} />
         <DomainsStrip onDomainClick={(d) => setDomainFilter(d)} />
         <ProjectsSection initialFilter={domainFilter} />
+        <OffersSection />
         <HowWeWork />
         <WhoWeServe />
         <ReviewsSection />

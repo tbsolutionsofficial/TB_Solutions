@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { signOut } from "@/lib/auth";
 import {
-  LayoutDashboard, FolderOpen, Star, FileText, Settings
+  LayoutDashboard, FolderOpen, Star, Inbox, Settings
 } from "lucide-react";
 import Link from "next/link";
 
@@ -14,7 +14,7 @@ const BOTTOM_NAV = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Projects", href: "/admin/projects", icon: FolderOpen },
   { label: "Reviews", href: "/admin/reviews", icon: Star },
-  { label: "Content", href: "/admin/content", icon: FileText },
+  { label: "Contacts", href: "/admin/contacts", icon: Inbox },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

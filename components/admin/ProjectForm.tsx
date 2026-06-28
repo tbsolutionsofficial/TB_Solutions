@@ -80,6 +80,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
       status: data.status,
       images,
       videoUrl: videoPreview || "",
+      sortOrder: project?.sortOrder ?? 0,
     };
 
     try {

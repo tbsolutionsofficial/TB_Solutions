@@ -3,13 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard,
-  FolderOpen,
-  Star,
-  FileText,
-  Settings,
-  LogOut,
-  ExternalLink,
+  LayoutDashboard, FolderOpen, Star, FileText, Settings,
+  LogOut, ExternalLink, Tag, Inbox, Megaphone,
 } from "lucide-react";
 import { signOut } from "@/lib/auth";
 import { toast } from "sonner";
@@ -18,6 +13,9 @@ const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Projects", href: "/admin/projects", icon: FolderOpen },
   { label: "Reviews", href: "/admin/reviews", icon: Star },
+  { label: "Banners", href: "/admin/banners", icon: Megaphone },
+  { label: "Offers", href: "/admin/offers", icon: Tag },
+  { label: "Contacts", href: "/admin/contacts", icon: Inbox },
   { label: "Site Content", href: "/admin/content", icon: FileText },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];

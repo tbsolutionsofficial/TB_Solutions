@@ -12,6 +12,7 @@ export interface Project {
   videoUrl?: string;
   featured: boolean;
   status: "completed" | "ongoing";
+  sortOrder: number;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
@@ -28,6 +29,43 @@ export interface Review {
   createdAt: Timestamp;
 }
 
+export interface Banner {
+  id: string;
+  title: string;
+  subtitle: string;
+  domain: string;
+  imageUrl?: string;
+  ctaText: string;
+  active: boolean;
+  sortOrder: number;
+  createdAt: Timestamp;
+}
+
+export interface Offer {
+  id: string;
+  title: string;
+  description: string;
+  discount: string;
+  domains: string[];
+  validUntil: string;
+  badge: string;
+  active: boolean;
+  sortOrder: number;
+  createdAt: Timestamp;
+}
+
+export interface ContactSubmission {
+  id: string;
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  domain: string;
+  message: string;
+  read: boolean;
+  createdAt: Timestamp;
+}
+
 export interface SiteContent {
   heroHeadline: string;
   heroSubtitle: string;
@@ -39,7 +77,14 @@ export interface SiteContent {
   linkedin?: string;
   projectsCount: string;
   domainsCount: string;
+  aboutTitle?: string;
   aboutText?: string;
+  aboutMission?: string;
+  aboutVision?: string;
+  termsContent?: string;
+  termsLastUpdated?: string;
+  offersHeadline?: string;
+  offersSubtitle?: string;
   updatedAt?: Timestamp;
 }
 

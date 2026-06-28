@@ -13,21 +13,22 @@ import {
   startAfter,
   serverTimestamp,
   onSnapshot,
+  writeBatch,
   type DocumentSnapshot,
   type QueryDocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import type { Project, Review, SiteContent } from "./types";
+import type { Project, Review, SiteContent, Banner, Offer, ContactSubmission } from "./types";
 
 // ─── PROJECTS ──────────────────────────────────────────────────
 
 function projectFromDoc(doc: QueryDocumentSnapshot | DocumentSnapshot): Project {
   const data = doc.data()!;
-  return { id: doc.id, ...data } as Project;
+  return { id: doc.id, sortOrder: 0, ...data } as Project;
 }
 
 export async function getProjects(domainFilter?: string, limitCount = 6, lastDoc?: QueryDocumentSnapshot) {
-  const constraints: Parameters<typeof query>[1][] = [orderBy("createdAt", "desc"), limit(limitCount)];
+  const constraints: Parameters<typeof query>[1][] = [orderBy("sortOrder", "asc"), limit(limitCount)];
   if (domainFilter && domainFilter !== "All") {
     constraints.unshift(where("domain", "==", domainFilter));
   }
@@ -50,7 +51,7 @@ export async function getRelatedProjects(domain: string, excludeId: string): Pro
   const q = query(
     collection(db, "projects"),
     where("domain", "==", domain),
-    orderBy("createdAt", "desc"),
+    orderBy("sortOrder", "asc"),
     limit(4)
   );
   const snap = await getDocs(q);
@@ -58,14 +59,18 @@ export async function getRelatedProjects(domain: string, excludeId: string): Pro
 }
 
 export async function getAllProjects(): Promise<Project[]> {
-  const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, "projects"), orderBy("sortOrder", "asc"));
   const snap = await getDocs(q);
   return snap.docs.map(projectFromDoc);
 }
 
 export async function createProject(data: Omit<Project, "id" | "createdAt" | "updatedAt">) {
+  // Set sortOrder to end of list
+  const all = await getAllProjects();
+  const maxOrder = all.length > 0 ? Math.max(...all.map((p) => p.sortOrder ?? 0)) : -1;
   const ref = await addDoc(collection(db, "projects"), {
     ...data,
+    sortOrder: maxOrder + 1,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
   });
@@ -80,6 +85,14 @@ export async function deleteProject(id: string) {
   await deleteDoc(doc(db, "projects", id));
 }
 
+export async function reorderProjects(orderedIds: string[]) {
+  const batch = writeBatch(db);
+  orderedIds.forEach((id, index) => {
+    batch.update(doc(db, "projects", id), { sortOrder: index, updatedAt: serverTimestamp() });
+  });
+  await batch.commit();
+}
+
 // ─── REVIEWS ───────────────────────────────────────────────────
 
 function reviewFromDoc(doc: QueryDocumentSnapshot | DocumentSnapshot): Review {
@@ -87,13 +100,12 @@ function reviewFromDoc(doc: QueryDocumentSnapshot | DocumentSnapshot): Review {
 }
 
 export async function getApprovedReviews(): Promise<Review[]> {
-  const q = query(
-    collection(db, "reviews"),
-    where("approved", "==", true),
-    orderBy("createdAt", "desc")
-  );
+  // Fetch without orderBy to avoid composite index requirement, sort client-side
+  const q = query(collection(db, "reviews"), where("approved", "==", true));
   const snap = await getDocs(q);
-  return snap.docs.map(reviewFromDoc);
+  return snap.docs
+    .map(reviewFromDoc)
+    .sort((a, b) => (b.createdAt?.toMillis?.() ?? 0) - (a.createdAt?.toMillis?.() ?? 0));
 }
 
 export async function getAllReviews(): Promise<Review[]> {
@@ -108,12 +120,14 @@ export function subscribeReviews(callback: (reviews: Review[]) => void) {
 }
 
 export function subscribeApprovedReviews(callback: (reviews: Review[]) => void) {
-  const q = query(
-    collection(db, "reviews"),
-    where("approved", "==", true),
-    orderBy("createdAt", "desc")
-  );
-  return onSnapshot(q, (snap) => callback(snap.docs.map(reviewFromDoc)));
+  // Filter only, no orderBy — avoids composite index requirement
+  const q = query(collection(db, "reviews"), where("approved", "==", true));
+  return onSnapshot(q, (snap) => {
+    const reviews = snap.docs
+      .map(reviewFromDoc)
+      .sort((a, b) => (b.createdAt?.toMillis?.() ?? 0) - (a.createdAt?.toMillis?.() ?? 0));
+    callback(reviews);
+  });
 }
 
 export async function submitReview(data: Omit<Review, "id" | "approved" | "createdAt">) {
@@ -134,6 +148,121 @@ export async function revokeReview(id: string) {
 
 export async function deleteReview(id: string) {
   await deleteDoc(doc(db, "reviews", id));
+}
+
+// ─── BANNERS ───────────────────────────────────────────────────
+
+function bannerFromDoc(doc: QueryDocumentSnapshot | DocumentSnapshot): Banner {
+  return { id: doc.id, sortOrder: 0, ...doc.data() } as Banner;
+}
+
+export async function getAllBanners(): Promise<Banner[]> {
+  const q = query(collection(db, "banners"), orderBy("sortOrder", "asc"));
+  const snap = await getDocs(q);
+  return snap.docs.map(bannerFromDoc);
+}
+
+export async function getActiveBanners(): Promise<Banner[]> {
+  const q = query(collection(db, "banners"), where("active", "==", true));
+  const snap = await getDocs(q);
+  return snap.docs
+    .map(bannerFromDoc)
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+}
+
+export async function createBanner(data: Omit<Banner, "id" | "createdAt">) {
+  const all = await getAllBanners();
+  const maxOrder = all.length > 0 ? Math.max(...all.map((b) => b.sortOrder ?? 0)) : -1;
+  const ref = await addDoc(collection(db, "banners"), {
+    ...data,
+    sortOrder: maxOrder + 1,
+    createdAt: serverTimestamp(),
+  });
+  return ref.id;
+}
+
+export async function updateBanner(id: string, data: Partial<Omit<Banner, "id" | "createdAt">>) {
+  await updateDoc(doc(db, "banners", id), data);
+}
+
+export async function deleteBanner(id: string) {
+  await deleteDoc(doc(db, "banners", id));
+}
+
+export async function reorderBanners(orderedIds: string[]) {
+  const batch = writeBatch(db);
+  orderedIds.forEach((id, index) => {
+    batch.update(doc(db, "banners", id), { sortOrder: index });
+  });
+  await batch.commit();
+}
+
+// ─── OFFERS ────────────────────────────────────────────────────
+
+function offerFromDoc(doc: QueryDocumentSnapshot | DocumentSnapshot): Offer {
+  return { id: doc.id, sortOrder: 0, ...doc.data() } as Offer;
+}
+
+export async function getAllOffers(): Promise<Offer[]> {
+  const q = query(collection(db, "offers"), orderBy("sortOrder", "asc"));
+  const snap = await getDocs(q);
+  return snap.docs.map(offerFromDoc);
+}
+
+export async function getActiveOffers(): Promise<Offer[]> {
+  const q = query(collection(db, "offers"), where("active", "==", true));
+  const snap = await getDocs(q);
+  return snap.docs
+    .map(offerFromDoc)
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+}
+
+export async function createOffer(data: Omit<Offer, "id" | "createdAt">) {
+  const all = await getAllOffers();
+  const maxOrder = all.length > 0 ? Math.max(...all.map((o) => o.sortOrder ?? 0)) : -1;
+  const ref = await addDoc(collection(db, "offers"), {
+    ...data,
+    sortOrder: maxOrder + 1,
+    createdAt: serverTimestamp(),
+  });
+  return ref.id;
+}
+
+export async function updateOffer(id: string, data: Partial<Omit<Offer, "id" | "createdAt">>) {
+  await updateDoc(doc(db, "offers", id), data);
+}
+
+export async function deleteOffer(id: string) {
+  await deleteDoc(doc(db, "offers", id));
+}
+
+// ─── CONTACT SUBMISSIONS ───────────────────────────────────────
+
+function contactFromDoc(doc: QueryDocumentSnapshot | DocumentSnapshot): ContactSubmission {
+  return { id: doc.id, ...doc.data() } as ContactSubmission;
+}
+
+export async function saveContactSubmission(data: Omit<ContactSubmission, "id" | "createdAt" | "read">) {
+  const ref = await addDoc(collection(db, "contacts"), {
+    ...data,
+    read: false,
+    createdAt: serverTimestamp(),
+  });
+  return ref.id;
+}
+
+export async function getAllContacts(): Promise<ContactSubmission[]> {
+  const q = query(collection(db, "contacts"), orderBy("createdAt", "desc"));
+  const snap = await getDocs(q);
+  return snap.docs.map(contactFromDoc);
+}
+
+export async function markContactRead(id: string) {
+  await updateDoc(doc(db, "contacts", id), { read: true });
+}
+
+export async function deleteContact(id: string) {
+  await deleteDoc(doc(db, "contacts", id));
 }
 
 // ─── SITE CONTENT ──────────────────────────────────────────────

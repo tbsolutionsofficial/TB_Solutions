@@ -1,0 +1,25 @@
+[debug] [2026-06-23T20:07:22.545Z] ----------------------------------------------------------------------
+[debug] [2026-06-23T20:07:22.547Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\SATISH\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js login:add --no-localhost
+[debug] [2026-06-23T20:07:22.547Z] CLI Version:   15.20.0
+[debug] [2026-06-23T20:07:22.547Z] Platform:      win32
+[debug] [2026-06-23T20:07:22.547Z] Node Version:  v22.20.0
+[debug] [2026-06-23T20:07:22.547Z] Time:          Wed Jun 24 2026 01:37:22 GMT+0530 (India Standard Time)
+[debug] [2026-06-23T20:07:22.548Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-23T20:07:22.725Z] >>> [apiv2][query] POST https://auth.firebase.tools/attest [none]
+[debug] [2026-06-23T20:07:22.725Z] >>> [apiv2][body] POST https://auth.firebase.tools/attest {"session_id":"90c10c31-3192-436c-bd2f-6ff2c34cdc23"}
+[debug] [2026-06-23T20:07:23.500Z] <<< [apiv2][status] POST https://auth.firebase.tools/attest 200
+[debug] [2026-06-23T20:07:23.501Z] <<< [apiv2][body] POST https://auth.firebase.tools/attest {"token":"ZPiAsgJ0IMfy5Q_0LWh08rRsjmGicfUep5e-kdBLsfk"}
+[info] 
+[info] To sign in to the Firebase CLI:
+[info] 
+[info] 1. Take note of your session ID:
+[info] 
+[info]    90C10
+[info] 
+[info] 2. Visit the URL below on any device and follow the instructions to get your code:
+[info] 
+[info]    https://auth.firebase.tools/login?code_challenge=XLP9ArS1lkFoCXm5TuFasJTcqH3_HauS9di9NOCpfU8&session=90c10c31-3192-436c-bd2f-6ff2c34cdc23&attest=ZPiAsgJ0IMfy5Q_0LWh08rRsjmGicfUep5e-kdBLsfk
+[info] 
+[info] 3. Paste or enter the authorization code below once you have it:
+[info] 
