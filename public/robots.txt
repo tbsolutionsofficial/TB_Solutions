@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /api/
 
-Sitemap: https://tbsolutions.web.app/sitemap.xml
+Sitemap: https://tbsolutions.online/sitemap.xml

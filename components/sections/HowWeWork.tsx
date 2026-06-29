@@ -40,10 +40,8 @@ export default function HowWeWork() {
           transition={{ duration: 0.5 }}
           className="text-center mb-14"
         >
-          <p className="font-inter text-xs font-medium text-coral uppercase tracking-[3px] mb-4">OUR PROCESS</p>
-          <h2 className="font-cormorant text-[clamp(36px,6vw,56px)] text-ink tracking-[-1px]">
-            From Idea to Reality
-          </h2>
+          <p className="section-label mb-3">Our Process</p>
+          <h2 className="section-heading">From Idea to Reality</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -61,7 +59,7 @@ export default function HowWeWork() {
                 <div className="text-ink mb-4">
                   <Icon size={28} />
                 </div>
-                <h3 className="font-cormorant text-2xl text-ink mb-2">{step.title}</h3>
+                <h3 className="font-cormorant font-semibold text-2xl text-ink mb-2">{step.title}</h3>
                 <p className="font-inter text-sm text-body leading-relaxed">{step.desc}</p>
               </motion.div>
             );

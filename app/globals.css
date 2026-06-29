@@ -135,14 +135,56 @@ body {
 
 .font-cormorant {
   font-family: var(--font-cormorant);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
 }
 
 .font-inter {
   font-family: var(--font-inter);
+  font-feature-settings: "cv11" 1, "ss01" 1;
 }
 
 .font-mono {
   font-family: var(--font-mono);
+}
+
+/* Tighter, more readable heading defaults */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* ─── SECTION LAYOUT HELPERS ───────────────────────────────── */
+
+/* Consistent section overline label */
+.section-label {
+  font-family: var(--font-inter);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-coral);
+}
+
+/* Section headline — strong Cormorant */
+.section-heading {
+  font-family: var(--font-cormorant);
+  font-weight: 600;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  color: var(--color-ink);
+}
+
+/* Section sub-copy */
+.section-sub {
+  font-family: var(--font-inter);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-body);
+  max-width: 520px;
 }
 
 /* ─── SCROLLBAR ─────────────────────────────────────────────── */

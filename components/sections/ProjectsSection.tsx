@@ -59,7 +59,7 @@ function ProjectCard({ project }: { project: Project }) {
 
         <div className="p-6">
           <GlassBadge variant="coral" className="mb-3 text-xs">{project.domain}</GlassBadge>
-          <h3 className="font-cormorant text-[22px] text-ink leading-snug mb-1">{project.title}</h3>
+          <h3 className="font-cormorant font-semibold text-[22px] text-ink leading-snug mb-1">{project.title}</h3>
           <p className="font-inter text-xs text-muted mb-3">{project.client}</p>
           <p className="font-inter text-sm text-body line-clamp-2 mb-4">{project.description}</p>
 
@@ -150,10 +150,9 @@ export default function ProjectsSection({ initialFilter }: ProjectsSectionProps)
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="font-cormorant text-[clamp(36px,6vw,56px)] text-ink tracking-[-1px] mb-3">
-            Our Work Speaks
-          </h2>
-          <p className="font-inter text-body text-lg">Real projects. Real results.</p>
+          <p className="section-label mb-3">Portfolio</p>
+          <h2 className="section-heading mb-3">Our Work Speaks</h2>
+          <p className="section-sub mx-auto">Real projects. Real results across 12 domains.</p>
         </motion.div>
 
         {/* Filter Bar */}

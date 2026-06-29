@@ -46,8 +46,8 @@ export default function WhoWeServe() {
           transition={{ duration: 0.5 }}
           className="text-center mb-14"
         >
-          <p className="font-inter text-xs font-medium text-coral uppercase tracking-[3px] mb-4">WHO WE SERVE</p>
-          <h2 className="font-cormorant text-[clamp(36px,6vw,56px)] text-white tracking-[-1px]">
+          <p className="font-inter text-xs font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "#e8a55a" }}>Who We Serve</p>
+          <h2 className="font-cormorant font-semibold text-[clamp(32px,5vw,52px)] text-white leading-[1.1] tracking-[-0.5px]">
             Built for Builders
           </h2>
         </motion.div>
@@ -66,8 +66,8 @@ export default function WhoWeServe() {
                 <div className="text-coral mb-6">
                   <Icon size={40} />
                 </div>
-                <h3 className="font-cormorant text-3xl text-white mb-1">{card.title}</h3>
-                <p className="font-inter text-sm text-white/50 mb-6">{card.subtitle}</p>
+                <h3 className="font-cormorant font-semibold text-3xl text-white mb-1">{card.title}</h3>
+                <p className="font-inter text-sm text-white/60 mb-6">{card.subtitle}</p>
                 <ul className="space-y-3 mb-8">
                   {card.bullets.map((b) => (
                     <li key={b} className="flex items-start gap-3 font-inter text-sm text-white/70">

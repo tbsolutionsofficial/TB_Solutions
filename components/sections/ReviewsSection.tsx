@@ -136,9 +136,8 @@ export default function ReviewsSection() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="font-cormorant text-[clamp(36px,6vw,56px)] text-ink tracking-[-1px] mb-4">
-            What Our Clients Say
-          </h2>
+          <p className="section-label mb-3">Testimonials</p>
+          <h2 className="section-heading mb-4">What Our Clients Say</h2>
           {avgRating && (
             <div className="inline-flex items-center gap-2 glass-light text-ink px-5 py-2.5 rounded-full font-inter text-sm">
               <span className="text-coral">★</span>

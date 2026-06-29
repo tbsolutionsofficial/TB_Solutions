@@ -25,12 +25,10 @@ export default function OffersSection() {
           className="text-center mb-10"
         >
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Tag size={18} className="text-coral" />
-            <span className="font-inter text-xs text-coral uppercase tracking-[3px]">Special Offers</span>
+            <Tag size={14} className="text-coral" />
+            <span className="section-label">Special Offers</span>
           </div>
-          <h2 className="font-cormorant text-[clamp(32px,5vw,52px)] text-ink tracking-[-1px]">
-            Exclusive Deals for You
-          </h2>
+          <h2 className="section-heading">Exclusive Deals for You</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
