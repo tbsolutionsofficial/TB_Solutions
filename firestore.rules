@@ -8,7 +8,8 @@ service cloud.firestore {
     }
 
     match /reviews/{docId} {
-      allow read: if resource.data.approved == true;
+      // Public can read approved reviews; authenticated admin can read ALL (pending + approved)
+      allow read: if resource.data.approved == true || request.auth != null;
       allow create: if request.resource.data.approved == false;
       allow update, delete: if request.auth != null;
     }

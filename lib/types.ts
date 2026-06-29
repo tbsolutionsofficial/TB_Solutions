@@ -49,6 +49,7 @@ export interface Offer {
   domains: string[];
   validUntil: string;
   badge: string;
+  imageUrl?: string;
   active: boolean;
   sortOrder: number;
   createdAt: Timestamp;

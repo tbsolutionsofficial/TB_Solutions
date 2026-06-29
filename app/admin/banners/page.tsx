@@ -8,7 +8,8 @@ import { DOMAINS } from "@/lib/types";
 import AdminHeader from "@/components/admin/AdminHeader";
 import GlassButton from "@/components/ui/GlassButton";
 import GlassModal from "@/components/ui/GlassModal";
-import { GlassInput, GlassTextarea } from "@/components/ui/GlassInput";
+import { GlassInput } from "@/components/ui/GlassInput";
+import ImageUploader from "@/components/admin/ImageUploader";
 import { toast } from "sonner";
 import {
   DndContext, closestCenter, PointerSensor, KeyboardSensor,
@@ -159,7 +160,14 @@ export default function AdminBannersPage() {
               {DOMAINS.map((d) => <option key={d} value={d}>{d}</option>)}
             </select>
           </div>
-          <GlassInput label="Image URL (optional)" placeholder="https://..." value={form.imageUrl || ""} onChange={(e) => setForm((f) => ({ ...f, imageUrl: e.target.value }))} />
+          <div>
+            <label className="text-xs font-inter font-medium text-white/70 block mb-1.5">Banner Image (optional)</label>
+            <ImageUploader
+              projectId={editId || "new-banner"}
+              images={form.imageUrl ? [form.imageUrl] : []}
+              onChange={(imgs) => setForm((f) => ({ ...f, imageUrl: imgs[0] || "" }))}
+            />
+          </div>
           <GlassInput label="CTA Button Text" placeholder="e.g. Start Project" value={form.ctaText} onChange={(e) => setForm((f) => ({ ...f, ctaText: e.target.value }))} />
           <label className="flex items-center gap-3 cursor-pointer">
             <div

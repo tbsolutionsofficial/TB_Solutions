@@ -28,17 +28,23 @@ function projectFromDoc(doc: QueryDocumentSnapshot | DocumentSnapshot): Project 
 }
 
 export async function getProjects(domainFilter?: string, limitCount = 6, lastDoc?: QueryDocumentSnapshot) {
-  const constraints: Parameters<typeof query>[1][] = [orderBy("sortOrder", "asc"), limit(limitCount)];
+  // No orderBy on sortOrder — old projects may not have the field and would be excluded by Firestore.
+  // Instead fetch filtered docs and sort client-side.
+  const constraints: Parameters<typeof query>[1][] = [];
   if (domainFilter && domainFilter !== "All") {
-    constraints.unshift(where("domain", "==", domainFilter));
+    constraints.push(where("domain", "==", domainFilter));
   }
   if (lastDoc) constraints.push(startAfter(lastDoc));
   const q = query(collection(db, "projects"), ...constraints);
   const snap = await getDocs(q);
+  const projects = snap.docs
+    .map(projectFromDoc)
+    .sort((a, b) => (a.sortOrder ?? 999) - (b.sortOrder ?? 999));
+  const paginated = projects.slice(0, limitCount);
   return {
-    projects: snap.docs.map(projectFromDoc),
+    projects: paginated,
     lastDoc: snap.docs[snap.docs.length - 1] ?? null,
-    hasMore: snap.docs.length === limitCount,
+    hasMore: snap.docs.length > limitCount,
   };
 }
 
@@ -48,20 +54,21 @@ export async function getProjectById(id: string): Promise<Project | null> {
 }
 
 export async function getRelatedProjects(domain: string, excludeId: string): Promise<Project[]> {
-  const q = query(
-    collection(db, "projects"),
-    where("domain", "==", domain),
-    orderBy("sortOrder", "asc"),
-    limit(4)
-  );
+  const q = query(collection(db, "projects"), where("domain", "==", domain), limit(6));
   const snap = await getDocs(q);
-  return snap.docs.map(projectFromDoc).filter((p) => p.id !== excludeId).slice(0, 3);
+  return snap.docs
+    .map(projectFromDoc)
+    .filter((p) => p.id !== excludeId)
+    .sort((a, b) => (a.sortOrder ?? 999) - (b.sortOrder ?? 999))
+    .slice(0, 3);
 }
 
 export async function getAllProjects(): Promise<Project[]> {
-  const q = query(collection(db, "projects"), orderBy("sortOrder", "asc"));
-  const snap = await getDocs(q);
-  return snap.docs.map(projectFromDoc);
+  // No orderBy — sorts client-side so old projects without sortOrder are included
+  const snap = await getDocs(collection(db, "projects"));
+  return snap.docs
+    .map(projectFromDoc)
+    .sort((a, b) => (a.sortOrder ?? 999) - (b.sortOrder ?? 999));
 }
 
 export async function createProject(data: Omit<Project, "id" | "createdAt" | "updatedAt">) {
@@ -109,14 +116,21 @@ export async function getApprovedReviews(): Promise<Review[]> {
 }
 
 export async function getAllReviews(): Promise<Review[]> {
-  const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
-  const snap = await getDocs(q);
-  return snap.docs.map(reviewFromDoc);
+  // No orderBy — avoids needing composite index; sort client-side
+  const snap = await getDocs(collection(db, "reviews"));
+  return snap.docs
+    .map(reviewFromDoc)
+    .sort((a, b) => (b.createdAt?.toMillis?.() ?? 0) - (a.createdAt?.toMillis?.() ?? 0));
 }
 
 export function subscribeReviews(callback: (reviews: Review[]) => void) {
-  const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
-  return onSnapshot(q, (snap) => callback(snap.docs.map(reviewFromDoc)));
+  // No orderBy — avoids composite index; sort client-side
+  return onSnapshot(collection(db, "reviews"), (snap) => {
+    const reviews = snap.docs
+      .map(reviewFromDoc)
+      .sort((a, b) => (b.createdAt?.toMillis?.() ?? 0) - (a.createdAt?.toMillis?.() ?? 0));
+    callback(reviews);
+  });
 }
 
 export function subscribeApprovedReviews(callback: (reviews: Review[]) => void) {
@@ -252,9 +266,10 @@ export async function saveContactSubmission(data: Omit<ContactSubmission, "id" |
 }
 
 export async function getAllContacts(): Promise<ContactSubmission[]> {
-  const q = query(collection(db, "contacts"), orderBy("createdAt", "desc"));
-  const snap = await getDocs(q);
-  return snap.docs.map(contactFromDoc);
+  const snap = await getDocs(collection(db, "contacts"));
+  return snap.docs
+    .map(contactFromDoc)
+    .sort((a, b) => (b.createdAt?.toMillis?.() ?? 0) - (a.createdAt?.toMillis?.() ?? 0));
 }
 
 export async function markContactRead(id: string) {

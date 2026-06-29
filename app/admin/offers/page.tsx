@@ -9,10 +9,11 @@ import AdminHeader from "@/components/admin/AdminHeader";
 import GlassButton from "@/components/ui/GlassButton";
 import GlassModal from "@/components/ui/GlassModal";
 import { GlassInput, GlassTextarea } from "@/components/ui/GlassInput";
+import ImageUploader from "@/components/admin/ImageUploader";
 import { toast } from "sonner";
 
 const EMPTY: Omit<Offer, "id" | "createdAt"> = {
-  title: "", description: "", discount: "", domains: [], validUntil: "", badge: "LIMITED TIME", active: true, sortOrder: 0,
+  title: "", description: "", discount: "", domains: [], validUntil: "", badge: "LIMITED TIME", imageUrl: "", active: true, sortOrder: 0,
 };
 
 export default function AdminOffersPage() {
@@ -28,7 +29,7 @@ export default function AdminOffersPage() {
 
   function openAdd() { setForm(EMPTY); setEditId(null); setModal(true); }
   function openEdit(o: Offer) {
-    setForm({ title: o.title, description: o.description, discount: o.discount, domains: o.domains, validUntil: o.validUntil, badge: o.badge, active: o.active, sortOrder: o.sortOrder });
+    setForm({ title: o.title, description: o.description, discount: o.discount, domains: o.domains, validUntil: o.validUntil, badge: o.badge, imageUrl: o.imageUrl || "", active: o.active, sortOrder: o.sortOrder });
     setEditId(o.id);
     setModal(true);
   }
@@ -112,6 +113,14 @@ export default function AdminOffersPage() {
             <GlassInput label="Badge" placeholder="e.g. LIMITED TIME" value={form.badge} onChange={(e) => setForm((f) => ({ ...f, badge: e.target.value }))} />
           </div>
           <GlassInput label="Valid Until" placeholder="e.g. July 31, 2026" value={form.validUntil} onChange={(e) => setForm((f) => ({ ...f, validUntil: e.target.value }))} />
+          <div>
+            <label className="text-xs font-inter font-medium text-white/70 block mb-1.5">Offer Image (optional)</label>
+            <ImageUploader
+              projectId={editId || "new-offer"}
+              images={form.imageUrl ? [form.imageUrl] : []}
+              onChange={(imgs) => setForm((f) => ({ ...f, imageUrl: imgs[0] || "" }))}
+            />
+          </div>
           <div>
             <label className="text-xs font-inter font-medium text-white/70 block mb-2">Applicable Domains (select all that apply)</label>
             <div className="flex flex-wrap gap-2">
