@@ -90,6 +90,9 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: SITE_URL },
   category: "technology",
+  verification: {
+    google: "DZniDEvCEPtNd0E7LByGKRKHJEJWfQgiGOh0qOnMF58",
+  },
 };
 
 const JSON_LD = {
