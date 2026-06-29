@@ -130,8 +130,11 @@ export default function ContactSection() {
               error={errors.message?.message}
             />
             <GlassButton type="submit" variant="coral" fullWidth loading={isSubmitting} size="lg">
-              Send Message
+              Send Message — Get Free Quote
             </GlassButton>
+            <p className="font-inter text-xs text-white/60 text-center mt-2">
+              ✓ Free consultation &nbsp;·&nbsp; ✓ We respond within 6 hours &nbsp;·&nbsp; ✓ No obligation
+            </p>
           </form>
 
           {/* Contact Chips */}

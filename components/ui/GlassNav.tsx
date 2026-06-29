@@ -82,7 +82,7 @@ export default function GlassNav() {
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="https://wa.me/916303987443"
+              href="https://wa.me/916303987443?text=Hi%20TorchBearer%20Solutions!%20I%20need%20help%20with%20my%20project."
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted hover:text-coral transition-colors p-2"
@@ -92,9 +92,9 @@ export default function GlassNav() {
             </a>
             <button
               onClick={() => scrollTo("#contact")}
-              className="glass-coral text-white text-sm font-inter font-medium px-5 py-2.5 rounded-full hover:brightness-110 transition-all cursor-pointer"
+              className="glass-coral text-white text-sm font-inter font-semibold px-6 py-2.5 rounded-full hover:brightness-110 transition-all cursor-pointer shadow-sm"
             >
-              Start a Project
+              Get Free Quote
             </button>
           </div>
 
