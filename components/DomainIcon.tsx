@@ -1,3 +1,4 @@
+import type { ComponentType } from "react";
 import {
   Brain,
   Bot,
@@ -13,7 +14,8 @@ import {
   Settings2,
 } from "lucide-react";
 
-const DOMAIN_ICONS: Record<string, React.ElementType> = {
+type IconType = ComponentType<{ size?: number; className?: string }>;
+const DOMAIN_ICONS: Record<string, IconType> = {
   "Artificial Intelligence": Brain,
   Robotics: Bot,
   "Internet of Things (IoT)": Wifi,

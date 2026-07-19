@@ -15,6 +15,7 @@ import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import MobileStickyBar from "@/components/MobileStickyBar";
+import WelcomeSplash from "@/components/WelcomeSplash";
 import { useSiteContent } from "@/hooks/useSiteContent";
 
 export default function HomePage() {
@@ -23,6 +24,7 @@ export default function HomePage() {
 
   return (
     <>
+      <WelcomeSplash />
       <GlassNav />
       <main className="pb-16 md:pb-0">
         <Hero content={content} />

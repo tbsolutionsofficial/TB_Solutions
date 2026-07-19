@@ -68,15 +68,14 @@ export default function WhyChooseUs() {
           <p className="font-inter text-xs text-muted uppercase tracking-[0.18em] font-semibold mb-5">
             Trusted by students from top colleges across India
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {COLLEGES.map((college) => (
-              <span
-                key={college}
-                className="font-inter text-xs font-semibold text-muted/80 glass-light px-4 py-2 rounded-full border border-hairline"
-              >
-                {college}
-              </span>
-            ))}
+          <div className="overflow-hidden">
+            <div className="flex w-[200%] animate-marquee items-center gap-12 whitespace-nowrap">
+              {[...COLLEGES, ...COLLEGES].map((c, i) => (
+                <span key={i} className="font-cormorant text-2xl text-muted/70">
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

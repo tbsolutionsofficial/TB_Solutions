@@ -263,3 +263,53 @@ p {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ─── MARQUEE (college names ticker) ───────────────────────── */
+
+@keyframes tb-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: tb-marquee 40s linear infinite;
+}
+
+/* ─── FLOAT (gentle vertical bob) ──────────────────────────── */
+
+@keyframes tb-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: tb-float 4s ease-in-out infinite;
+}
+
+/* ─── PROGRESS BAR (splash screen) ─────────────────────────── */
+
+@keyframes tb-progress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-progress {
+  animation: tb-progress 1.4s ease-out forwards;
+}
+
+/* ─── FALLING PARTICLES (contact section) ───────────────────── */
+
+@keyframes tb-fall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* ─── REDUCED MOTION ────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
