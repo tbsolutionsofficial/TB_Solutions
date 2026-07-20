@@ -1,26 +1,21 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
+import { Libre_Baskerville, IBM_Plex_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
+const libreBaskerville = Libre_Baskerville({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-libre-baskerville",
+  display: "swap",
+});
+
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-ibm-plex-sans",
   display: "swap",
 });
 
@@ -140,7 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${libreBaskerville.variable} ${ibmPlexSans.variable} h-full antialiased`}
     >
       <head>
         <script
