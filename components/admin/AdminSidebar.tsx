@@ -4,7 +4,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, FolderOpen, Star, FileText, Settings,
-  LogOut, ExternalLink, Tag, Inbox, Megaphone,
+  LogOut, ExternalLink, Tag, Inbox, Megaphone, Layers, ImageIcon,
 } from "lucide-react";
 import { signOut } from "@/lib/auth";
 import { toast } from "sonner";
@@ -12,7 +12,9 @@ import { toast } from "sonner";
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Projects", href: "/admin/projects", icon: FolderOpen },
-  { label: "Reviews", href: "/admin/reviews", icon: Star },
+  { label: "Domains", href: "/admin/domains", icon: Layers },
+  { label: "Gallery", href: "/admin/gallery", icon: ImageIcon },
+  { label: "Testimonials", href: "/admin/reviews", icon: Star },
   { label: "Banners", href: "/admin/banners", icon: Megaphone },
   { label: "Offers", href: "/admin/offers", icon: Tag },
   { label: "Contacts", href: "/admin/contacts", icon: Inbox },

@@ -22,10 +22,40 @@ export interface Review {
   name: string;
   role: string;
   college: string;
+  company?: string;
+  avatar?: string;
   domain: string;
   rating: number;
+  stars?: number;
   review: string;
   approved: boolean;
+  status?: "pending" | "approved" | "rejected";
+  createdAt: Timestamp;
+}
+
+export interface DomainDoc {
+  slug: string;
+  title: string;
+  short: string;
+  icon: string;
+  items: string[];
+  overview: string;
+  services: { title: string; description: string }[];
+  faq: { q: string; a: string }[];
+  featured: boolean;
+  order: number;
+  updatedAt?: Timestamp;
+}
+
+export interface GalleryItem {
+  id: string;
+  type: "image" | "video";
+  src: string;
+  poster?: string;
+  title: string;
+  category: "AI" | "Robotics" | "IoT" | "Drones" | "Software";
+  span?: "sm" | "md" | "lg" | "xl";
+  sortOrder: number;
   createdAt: Timestamp;
 }
 

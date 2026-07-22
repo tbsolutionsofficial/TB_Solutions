@@ -18,7 +18,7 @@ import {
   type QueryDocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import type { Project, Review, SiteContent, Banner, Offer, ContactSubmission } from "./types";
+import type { Project, Review, SiteContent, Banner, Offer, ContactSubmission, DomainDoc, GalleryItem } from "./types";
 
 // ─── PROJECTS ──────────────────────────────────────────────────
 
@@ -248,6 +248,81 @@ export async function updateOffer(id: string, data: Partial<Omit<Offer, "id" | "
 
 export async function deleteOffer(id: string) {
   await deleteDoc(doc(db, "offers", id));
+}
+
+export async function reorderOffers(orderedIds: string[]) {
+  const batch = writeBatch(db);
+  orderedIds.forEach((id, index) => {
+    batch.update(doc(db, "offers", id), { sortOrder: index });
+  });
+  await batch.commit();
+}
+
+// ─── DOMAINS ───────────────────────────────────────────────────
+
+function domainFromDoc(d: QueryDocumentSnapshot | DocumentSnapshot): DomainDoc {
+  return { slug: d.id, ...d.data() } as DomainDoc;
+}
+
+export async function getDomains(): Promise<DomainDoc[]> {
+  const snap = await getDocs(collection(db, "domains"));
+  return snap.docs
+    .map(domainFromDoc)
+    .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+}
+
+export async function getDomainBySlug(slug: string): Promise<DomainDoc | null> {
+  const snap = await getDoc(doc(db, "domains", slug));
+  return snap.exists() ? domainFromDoc(snap) : null;
+}
+
+export async function updateDomain(slug: string, data: Partial<Omit<DomainDoc, "slug">>) {
+  await updateDoc(doc(db, "domains", slug), { ...data, updatedAt: serverTimestamp() });
+}
+
+export async function createDomain(slug: string, data: Omit<DomainDoc, "slug" | "updatedAt">) {
+  const { setDoc } = await import("firebase/firestore");
+  await setDoc(doc(db, "domains", slug), { ...data, updatedAt: serverTimestamp() });
+}
+
+export async function deleteDomain(slug: string) {
+  await deleteDoc(doc(db, "domains", slug));
+}
+
+// ─── GALLERY ───────────────────────────────────────────────────
+
+function galleryFromDoc(d: QueryDocumentSnapshot | DocumentSnapshot): GalleryItem {
+  return { id: d.id, sortOrder: 0, ...d.data() } as GalleryItem;
+}
+
+export async function getGalleryItems(): Promise<GalleryItem[]> {
+  const snap = await getDocs(collection(db, "gallery"));
+  return snap.docs
+    .map(galleryFromDoc)
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+}
+
+export async function createGalleryItem(data: Omit<GalleryItem, "id" | "createdAt">): Promise<string> {
+  const ref = await addDoc(collection(db, "gallery"), {
+    ...data,
+    createdAt: serverTimestamp(),
+  });
+  return ref.id;
+}
+
+export async function updateGalleryItem(id: string, data: Partial<Omit<GalleryItem, "id" | "createdAt">>) {
+  await updateDoc(doc(db, "gallery", id), data);
+}
+
+export async function deleteGalleryItem(id: string) {
+  await deleteDoc(doc(db, "gallery", id));
+}
+
+export async function updateReviewStatus(id: string, status: "pending" | "approved" | "rejected") {
+  await updateDoc(doc(db, "reviews", id), {
+    status,
+    approved: status === "approved",
+  });
 }
 
 // ─── CONTACT SUBMISSIONS ───────────────────────────────────────

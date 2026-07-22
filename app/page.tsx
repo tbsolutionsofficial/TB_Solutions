@@ -6,194 +6,24 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  Bot,
-  Workflow,
-  Code2,
-  Cpu,
-  Wifi,
-  CircuitBoard,
-  Glasses,
-  Plane,
-  Building2,
-  Palette,
-  Globe,
-  Sparkles,
   CheckCircle2,
   Send,
-  ChevronRight,
   Phone,
   MessageCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import GlassNav from "@/components/ui/GlassNav";
 import Footer from "@/components/sections/Footer";
+import DomainsSection from "@/components/sections/DomainsSection";
+import GallerySection from "@/components/sections/GallerySection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import ProcessSection from "@/components/sections/ProcessSection";
 import { saveContactSubmission } from "@/lib/firestore";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
 };
-
-const expertise = [
-  {
-    title: "Artificial Intelligence",
-    icon: Bot,
-    items: [
-      "Artificial Intelligence (AI)",
-      "Generative AI",
-      "Machine Learning",
-      "Deep Learning",
-      "Computer Vision",
-      "Natural Language Processing (NLP)",
-      "AI Agents & Assistants",
-      "AI Chatbots & Voice Agents",
-      "AI Workflow Automation",
-      "AI Business Automation",
-      "AI Customer Support",
-      "AI Document Processing",
-    ],
-  },
-  {
-    title: "Automation",
-    icon: Workflow,
-    items: [
-      "WhatsApp Automation",
-      "Email Automation",
-      "Sales Automation",
-      "Marketing Automation",
-      "HR Automation",
-      "Workflow Automation",
-      "Business Process Automation (BPA)",
-      "Robotic Process Automation (RPA)",
-      "Industrial Automation",
-      "Smart Automation Systems",
-    ],
-  },
-  {
-    title: "Software Development",
-    icon: Code2,
-    items: [
-      "Web Development",
-      "Full Stack Development",
-      "Mobile App Development",
-      "Desktop Application Development",
-      "Progressive Web Apps (PWA)",
-      "SaaS Development",
-      "Enterprise Software",
-      "API Development",
-      "Custom Software Solutions",
-    ],
-  },
-  {
-    title: "Robotics & Embedded Systems",
-    icon: Cpu,
-    items: [
-      "Robotics & Robot Programming",
-      "ROS & ROS2",
-      "Industrial Robotics",
-      "Autonomous Robots",
-      "Embedded Systems",
-      "Firmware Development",
-      "Arduino Development",
-      "ESP32 Development",
-      "Raspberry Pi Development",
-      "STM32 Development",
-    ],
-  },
-  {
-    title: "IoT & Smart Systems",
-    icon: Wifi,
-    items: [
-      "Internet of Things (IoT)",
-      "Industrial IoT (IIoT)",
-      "Smart Home Solutions",
-      "Smart Agriculture",
-      "Smart Factory",
-      "Smart City Solutions",
-      "Sensor Networks",
-      "Edge Computing",
-    ],
-  },
-  {
-    title: "Electronics & Hardware",
-    icon: CircuitBoard,
-    items: [
-      "Electronics Design",
-      "PCB Design",
-      "Circuit Design",
-      "Power Electronics",
-      "Electronic Product Development",
-      "Hardware Prototyping",
-    ],
-  },
-  {
-    title: "Emerging Technologies",
-    icon: Glasses,
-    items: ["AR/VR", "3D Printing", "Digital Transformation"],
-  },
-  {
-    title: "Drone Technology",
-    icon: Plane,
-    items: ["Drone Technology", "UAV Solutions", "Drone Automation"],
-  },
-  {
-    title: "Business Solutions",
-    icon: Building2,
-    items: [
-      "E-commerce Solutions",
-      "Billing Software",
-      "Inventory Management Systems",
-      "School Management Systems",
-      "Hospital Management Systems",
-      "Learning Management Systems (LMS)",
-    ],
-  },
-  {
-    title: "UI/UX & Creative Design",
-    icon: Palette,
-    items: [
-      "UI/UX Design",
-      "Product Design",
-      "Graphic Design",
-      "Brand Identity",
-      "Logo Design",
-      "Motion Graphics",
-    ],
-  },
-  {
-    title: "Digital Services",
-    icon: Globe,
-    items: [
-      "SEO & Website Optimization",
-      "Content Management Systems",
-      "Website Maintenance",
-      "Performance Optimization",
-      "Social Media Automation",
-      "Technical Consulting",
-    ],
-  },
-];
-
-const processSteps = [
-  {
-    step: "01",
-    title: "Discover",
-    description:
-      "We listen first. Understanding your goals, constraints, and opportunities before proposing any solution.",
-  },
-  {
-    step: "02",
-    title: "Design",
-    description:
-      "We architect a tailored roadmap — technology, talent, and timeline aligned to your academic or business outcomes.",
-  },
-  {
-    step: "03",
-    title: "Deliver",
-    description:
-      "We execute with precision, keep communication transparent, and hand over solutions built to last.",
-  },
-];
 
 const whyUs = [
   "Cross-domain expertise from AI to hardware",
@@ -248,143 +78,106 @@ export default function HomePage() {
       <GlassNav />
 
       {/* Hero */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-24 sm:px-6 lg:px-8">
+      <section className="relative flex min-h-screen items-center overflow-hidden px-5 pt-24 sm:px-6 lg:px-8">
         <div className="absolute inset-0 -z-10">
           <div className="absolute left-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-copper/10 blur-[120px]" />
           <div className="absolute bottom-1/4 right-1/4 h-[400px] w-[400px] rounded-full bg-copper-light/15 blur-[100px]" />
         </div>
 
-        <div className="mx-auto max-w-6xl">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-            className="glass-strong glow-copper rounded-[2.5rem] p-8 text-center sm:p-12 lg:p-16"
-          >
-            <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
-              <Image
-                src="/logo.png"
-                alt="TorchBearer Solutions"
-                width={176}
-                height={176}
-                className="h-28 w-auto object-contain sm:h-36 lg:h-44"
-                priority
+        <div className="mx-auto w-full max-w-7xl py-12">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+            {/* Left — text content */}
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+            >
+              <motion.div variants={fadeInUp} className="mb-6">
+                <Image
+                  src="/logo.png"
+                  alt="TorchBearer Solutions"
+                  width={160}
+                  height={160}
+                  className="h-20 w-auto object-contain sm:h-24"
+                  priority
+                />
+              </motion.div>
+
+              <motion.h1
+                variants={fadeInUp}
+                className="font-display text-4xl font-bold leading-[1.1] text-foreground sm:text-5xl lg:text-6xl xl:text-7xl"
+              >
+                Guiding Ideas.
+                <br />
+                <span className="text-gradient-copper">Empowering Impact.</span>
+              </motion.h1>
+
+              <motion.p
+                variants={fadeInUp}
+                className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
+              >
+                TorchBearer Solutions is your trusted project partner across AI,
+                automation, software, robotics, IoT, and digital transformation.
+                From final year projects to industry solutions — we turn ideas into reality.
+              </motion.p>
+
+              <motion.div
+                variants={fadeInUp}
+                className="mt-8 flex flex-col gap-4 sm:flex-row"
+              >
+                <a
+                  href="#expertise"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-semibold text-primary-foreground transition-all hover:bg-copper-dark hover:shadow-xl hover:shadow-copper/20"
+                >
+                  Explore our expertise
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background/50 px-8 py-4 text-base font-semibold text-foreground transition-all hover:bg-secondary"
+                >
+                  Start a project
+                </a>
+              </motion.div>
+
+              <motion.div variants={fadeInUp} className="mt-10 flex flex-wrap gap-8">
+                {[
+                  { value: "150+", label: "Projects Delivered" },
+                  { value: "11", label: "Tech Domains" },
+                  { value: "98%", label: "On-Time Delivery" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <div className="font-display text-3xl font-bold text-copper-dark">{s.value}</div>
+                    <div className="mt-1 text-sm text-muted-foreground">{s.label}</div>
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Right — transparent character overlay */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              className="flex items-end justify-center lg:justify-end"
+            >
+              <video
+                src="/hero-animation.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full max-w-[520px] object-contain"
+                style={{ mixBlendMode: "multiply" }}
               />
             </motion.div>
-
-            <motion.h1
-              variants={fadeInUp}
-              className="font-display text-4xl font-bold leading-[1.1] text-foreground sm:text-5xl lg:text-7xl"
-            >
-              Guiding Ideas.
-              <br />
-              <span className="text-gradient-copper">Empowering Impact.</span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeInUp}
-              className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
-            >
-              TorchBearer Solutions is your trusted project partner across AI,
-              automation, software, robotics, IoT, and digital transformation.
-              From final year projects to industry solutions — we turn ideas into reality.
-            </motion.p>
-
-            <motion.div
-              variants={fadeInUp}
-              className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-            >
-              <a
-                href="#expertise"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-semibold text-primary-foreground transition-all hover:bg-copper-dark hover:shadow-xl hover:shadow-copper/20"
-              >
-                Explore our expertise
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background/50 px-8 py-4 text-base font-semibold text-foreground transition-all hover:bg-secondary"
-              >
-                Start a project
-              </a>
-            </motion.div>
-
-            <motion.div
-              variants={fadeInUp}
-              className="mt-10 flex flex-wrap items-center justify-center gap-8 text-center"
-            >
-              {[
-                { value: "150+", label: "Projects Delivered" },
-                { value: "11", label: "Tech Domains" },
-                { value: "98%", label: "On-Time Delivery" },
-              ].map((s) => (
-                <div key={s.label}>
-                  <div className="font-display text-3xl font-bold text-copper-dark">{s.value}</div>
-                  <div className="mt-1 text-sm text-muted-foreground">{s.label}</div>
-                </div>
-              ))}
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Expertise */}
-      <section id="expertise" className="px-5 py-20 sm:px-6 lg:px-8 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="mb-16 text-center"
-          >
-            <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-1.5 text-sm font-semibold text-copper-dark">
-              <Sparkles className="h-4 w-4" />
-              Our Expertise
-            </span>
-            <h2 className="mt-6 font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
-              Every Domain. One Partner.
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-              From concept to deployment, we bring deep technical knowledge
-              across the full spectrum of modern technology.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {expertise.map((category, index) => (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="group glass rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-copper/10 sm:p-8"
-              >
-                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-copper-dark transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  <category.icon className="h-6 w-6" />
-                </div>
-                <h3 className="font-display text-xl font-bold text-foreground">
-                  {category.title}
-                </h3>
-                <ul className="mt-4 space-y-2">
-                  {category.items.slice(0, 6).map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <ChevronRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-copper" />
-                      {item}
-                    </li>
-                  ))}
-                  {category.items.length > 6 && (
-                    <li className="text-sm font-medium text-copper-dark">
-                      +{category.items.length - 6} more
-                    </li>
-                  )}
-                </ul>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
+
+      <DomainsSection />
+
+      <GallerySection />
 
       {/* About / Why us */}
       <section id="about" className="bg-cream px-5 py-20 sm:px-6 lg:px-8 lg:py-28">
@@ -449,53 +242,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Process */}
-      <section id="process" className="px-5 py-20 sm:px-6 lg:px-8 lg:py-28">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="mb-16 text-center"
-          >
-            <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-1.5 text-sm font-semibold text-copper-dark">
-              How We Work
-            </span>
-            <h2 className="mt-6 font-display text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
-              A simple, proven process.
-            </h2>
-          </motion.div>
+      <TestimonialsSection />
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="glass relative overflow-hidden rounded-3xl p-8"
-              >
-                <div className="absolute -right-4 -top-4 font-display text-8xl font-bold text-copper/10">
-                  {step.step}
-                </div>
-                <div className="relative">
-                  <span className="font-display text-sm font-bold text-copper-dark">
-                    Step {step.step}
-                  </span>
-                  <h3 className="mt-4 font-display text-2xl font-bold text-foreground">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">
-                    {step.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProcessSection />
 
       {/* Contact */}
       <section id="contact" className="bg-cream/50 px-5 py-20 sm:px-6 lg:px-8 lg:py-28">
